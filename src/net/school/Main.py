@@ -36,7 +36,9 @@ window.fill((255,255,255))
 makeGameLines(250)
 makeGameLines(549)
 drawX(100,100)
-drawO(400,100)
+drawX(700,700)
+drawO(400,400)
+drawO(700,100)
 
 pygame.display.update()
 while True:
