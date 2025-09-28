@@ -15,8 +15,8 @@ class Spot():
         this.Symbol = symbol
 
 def makeGameLines(x):
-    pygame.draw.line(window, (0,0,0),(x,0),(x,800),100)
-    pygame.draw.line(window, (0,0,0),(0,x), (800, x), 100)
+    pygame.draw.line(window, (0,0,0),(x,0),(x,800),50)
+    pygame.draw.line(window, (0,0,0),(0,x), (800, x), 50)
 
 def drawX(x,y):
     pygame.draw.line(window, (255,0,0),(x-100,y-100),(x+100,y+100),50)
@@ -34,7 +34,7 @@ pygame.display.set_icon(pygame.image.load(os.path.join("..","..","..","resources
 window.fill((255,255,255))
 
 makeGameLines(250)
-makeGameLines(550)
+makeGameLines(549)
 drawX(100,100)
 drawO(400,100)
 
