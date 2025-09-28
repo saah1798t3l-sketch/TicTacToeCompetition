@@ -22,7 +22,7 @@ def drawX(x,y):
     pygame.draw.line(window, (255,0,0),(x-100,y-100),(x+100,y+100),50)
     pygame.draw.line(window, (255,0,0),(x+100,y-100),(x-100,y+100),50)
 def drawO(x,y):
-    pygame.draw.circle(window, (0,0,255),(x,y), 100,50)
+    pygame.draw.circle(window, (0,100,255),(x,y), 100,50)
 
 
 
