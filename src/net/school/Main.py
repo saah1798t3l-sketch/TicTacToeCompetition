@@ -8,11 +8,13 @@ class Symbol(Enum):
     X = 1
     O = 2
 class Spot:
-    def __init__(this, symbol, buttonX, buttonY):
-        this.symbol = symbol
-        this.rectangle = pygame.Rect(buttonX, buttonY, 200, 200)
-    def updateSymbol(this, symbol):
-        this.symbol = symbol
+    def __init__(self, buttonX, buttonY):
+        self.symbol = Symbol.NONE
+        self.rectangle = pygame.Rect(buttonX, buttonY, 200, 200)
+    def updateSymbol(self, symbol):
+        self.symbol = symbol
+    def __eq__(self, otherSpot):
+        return self.symbol == otherSpot.symbol
 
 def makeGameLines(x):
     pygame.draw.line(window, (0,0,0),(x,0),(x,800),50)
@@ -44,10 +46,7 @@ makeGameLines(549)
 spots = [] #Inner arrays = Columns!!! (vertical!!!)
 for x in (n := range(0, 900,300)):
     for y in n:
-        spots.append(Spot(Symbol.NONE, x, y))
-
-buttonA = pygame.Rect(0,0,200,200)
-buttonB = pygame.Rect(0,300,200,200)
+        spots.append(Spot(x, y))
 
 
 pygame.display.update()
