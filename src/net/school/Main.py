@@ -23,6 +23,10 @@ def drawX(x,y):
     pygame.draw.line(window, (255,0,0),(x+100,y-100),(x-100,y+100),50)
 def drawO(x,y):
     pygame.draw.circle(window, (0,100,255),(x,y), 100,50)
+
+def checkWin():
+   pass
+
 XTurn = True
 
 
@@ -48,6 +52,9 @@ buttonB = pygame.Rect(0,300,200,200)
 
 pygame.display.update()
 while True:
+    font = pygame.font.SysFont("Times New Roman", 30)
+    textImage = font.render(("X" if XTurn else "O") +" to move", True, (0,0,0), (255,255,255))
+    window.blit(textImage, (350,810))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -63,9 +70,4 @@ while True:
                         drawO(spot.rectangle.x +100, spot.rectangle.y+100)
                         spot.symbol = Symbol.O
                     XTurn = not XTurn
-                    break
-    font = pygame.font.SysFont("Times New Roman", 30)
-    textImage = font.render(("X" if XTurn else "O") +" to move", True, (0,0,0), (255,255,255))
-    window.blit(textImage, (350,810))
-
     pygame.display.update()
