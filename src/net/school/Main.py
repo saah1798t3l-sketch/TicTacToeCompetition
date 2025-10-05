@@ -80,7 +80,7 @@ while True:
                         drawO(spot.rectangle.x +100, spot.rectangle.y+100)
                         spot.symbol = Symbol.O
                     XTurn = not XTurn
-            if ((w := checkWin()) == Symbol.NONE):
+            if (w := checkWin()) == Symbol.NONE:
                 continue
             textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
             window.blit(textImage, (275,810))
