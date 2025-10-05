@@ -16,18 +16,28 @@ class Spot:
     def __eq__(self, otherSpot):
         return self.symbol == otherSpot.symbol
 
-def makeGameLines(x):
-    pygame.draw.line(window, (0,0,0),(x,0),(x,800),50)
-    pygame.draw.line(window, (0,0,0),(0,x), (800, x), 50)
+def makeGameLines(LineXCordinate):
+    pygame.draw.line(window, (0,0,0), (LineXCordinate, 0), (LineXCordinate, 800), 50)
+    pygame.draw.line(window, (0,0,0), (0, LineXCordinate), (800, LineXCordinate), 50)
 
-def drawX(x,y):
-    pygame.draw.line(window, (255,0,0),(x-100,y-100),(x+100,y+100),50)
-    pygame.draw.line(window, (255,0,0),(x+100,y-100),(x-100,y+100),50)
-def drawO(x,y):
-    pygame.draw.circle(window, (0,100,255),(x,y), 100,50)
+def drawX(xCordinate, yCordinate):
+    pygame.draw.line(window, (255,0,0), (xCordinate - 100, yCordinate - 100), (xCordinate + 100, yCordinate + 100), 50)
+    pygame.draw.line(window, (255,0,0), (xCordinate + 100, yCordinate - 100), (xCordinate - 100, yCordinate + 100), 50)
+def drawO(xCordinate,yCordinate):
+    pygame.draw.circle(window, (0,100,255),(xCordinate,yCordinate), 100,50)
 
 def checkWin():
-   pass
+   for i in range(0,9,3):
+       if (s:= spots[i]) == spots[i + 1] and spots[i] == spots[i + 2] and s.symbol != Symbol.NONE:
+           return s.symbol
+
+   for i in range(0,3):
+        if (s:= spots[i]) == spots[i + 3] and spots[i] == spots[i + 6] and s.symbol != Symbol.NONE:
+            return s.symbol
+   if ((spots[0] == spots[4] and spots[0] == spots[8]) or (spots[2] == spots[4] and spots[2] == spots[6])) and spots[4].symbol != Symbol.NONE:
+       return spots[4].symbol
+   return Symbol.NONE
+
 
 XTurn = True
 
@@ -48,17 +58,18 @@ for x in (n := range(0, 900,300)):
     for y in n:
         spots.append(Spot(x, y))
 
-
+won = False
 pygame.display.update()
 while True:
-    font = pygame.font.SysFont("Times New Roman", 30)
-    textImage = font.render(("X" if XTurn else "O") +" to move", True, (0,0,0), (255,255,255))
-    window.blit(textImage, (350,810))
+    if not won:
+        font = pygame.font.SysFont("Times New Roman", 30)
+        textImage = font.render(("X" if XTurn else "O") +" to move", True, (0,0,0), (255,255,255))
+        window.blit(textImage, (335,810))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and not won:
             position = event.pos
             for spot in spots:
                 if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
@@ -69,4 +80,9 @@ while True:
                         drawO(spot.rectangle.x +100, spot.rectangle.y+100)
                         spot.symbol = Symbol.O
                     XTurn = not XTurn
+            if ((w := checkWin()) == Symbol.NONE):
+                continue
+            textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
+            window.blit(textImage, (275,810))
+            won = True
     pygame.display.update()
