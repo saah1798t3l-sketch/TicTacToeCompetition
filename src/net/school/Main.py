@@ -60,9 +60,9 @@ for x in (n := range(0, 900,300)):
 
 won = False
 pygame.display.update()
+font = pygame.font.SysFont("Times New Roman", 30)
 while True:
     if not won:
-        font = pygame.font.SysFont("Times New Roman", 30)
         textImage = font.render(("X" if XTurn else "O") +" to move", True, (0,0,0), (255,255,255))
         window.blit(textImage, (335,810))
     for event in pygame.event.get():
