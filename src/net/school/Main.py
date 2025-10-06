@@ -10,7 +10,7 @@ class Symbol(Enum):
 class Spot:
     def __init__(self, buttonX, buttonY):
         self.symbol = Symbol.NONE
-        self.rectangle = pygame.Rect(buttonX, buttonY, 200, 200)
+        self.rectangle = pygame.Rect(buttonX, buttonY, 225, 225)
     def updateSymbol(self, symbol):
         self.symbol = symbol
     def __eq__(self, otherSpot):
