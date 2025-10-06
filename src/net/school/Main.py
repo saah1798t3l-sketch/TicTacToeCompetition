@@ -39,7 +39,7 @@ def checkWin():
    return Symbol.NONE
 
 
-XTurn = True
+turn = Symbol.X
 
 
 
@@ -53,36 +53,35 @@ window.fill((255,255,255))
 
 makeGameLines(250)
 makeGameLines(549)
-spots = [] #Inner arrays = Columns!!! (vertical!!!)
+spots = [] #Triplets = Columns
 for x in (n := range(0, 900,300)):
     for y in n:
         spots.append(Spot(x, y))
 
-won = False
 pygame.display.update()
 font = pygame.font.SysFont("Times New Roman", 30)
 while True:
-    if not won:
-        textImage = font.render(("X" if XTurn else "O") +" to move", True, (0,0,0), (255,255,255))
+    if turn != Symbol.NONE:
+        textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
         window.blit(textImage, (335,810))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN and not won:
+        if event.type == pygame.MOUSEBUTTONDOWN and turn != Symbol.NONE:
             position = event.pos
             for spot in spots:
                 if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
-                    if XTurn:
+                    if turn == Symbol.X:
                         drawX(spot.rectangle.x +100, spot.rectangle.y+100)
                         spot.symbol = Symbol.X
                     else:
                         drawO(spot.rectangle.x +100, spot.rectangle.y+100)
                         spot.symbol = Symbol.O
-                    XTurn = not XTurn
+                    turn = Symbol.O if turn == Symbol.X else Symbol.X
             if (w := checkWin()) == Symbol.NONE:
                 continue
             textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
             window.blit(textImage, (275,810))
-            won = True
+            turn = Symbol.NONE
     pygame.display.update()
