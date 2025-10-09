@@ -29,6 +29,7 @@ def drawO(xCordinate,yCordinate):
 def checkWin():
     for i in range(0,9,3):
         if (s:= spots[i]) == spots[i + 1] and spots[i] == spots[i + 2] and s.symbol != Symbol.NONE:
+            #pygame.draw.line(window, (0,0,0), (s.rectangle.x, s.rectangle.y-100), (spots[i+2].rectangle.x, spots[i+2].rectangle.y+100), 50)
             return s.symbol
 
     for i in range(0,3):
@@ -52,9 +53,9 @@ window.fill((255,255,255))
 
 
 makeGameLines(250)
-makeGameLines(549)
+makeGameLines(525)
 spots = [] #Triplets = Columns
-for x in (n := range(0, 900,300)):
+for x in (n := range(0, 900,275)):
     for y in n:
         spots.append(Spot(x, y))
 
