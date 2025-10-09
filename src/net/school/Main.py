@@ -21,8 +21,8 @@ def makeGameLines(LineXCordinate):
     pygame.draw.line(window, (0,0,0), (0, LineXCordinate), (800, LineXCordinate), 50)
 
 def drawX(xCordinate, yCordinate):
-    pygame.draw.line(window, (255,0,0), (xCordinate - 100, yCordinate - 100), (xCordinate + 100, yCordinate + 100), 50)
-    pygame.draw.line(window, (255,0,0), (xCordinate + 100, yCordinate - 100), (xCordinate - 100, yCordinate + 100), 50)
+    pygame.draw.line(window, (255,0,0), (xCordinate - 75, yCordinate - 100), (xCordinate + 100, yCordinate + 100), 50)
+    pygame.draw.line(window, (255,0,0), (xCordinate + 100, yCordinate - 100), (xCordinate - 75, yCordinate + 100), 50)
 def drawO(xCordinate,yCordinate):
     pygame.draw.circle(window, (0,100,255),(xCordinate,yCordinate), 100,50)
 
@@ -46,7 +46,7 @@ turn = Symbol.X
 
 
 pygame.init()
-window = pygame.display.set_mode((800,850), 0 ,32)
+window = pygame.display.set_mode((775,850), 0 ,32)
 pygame.display.set_caption("Tic Tac Toe")
 pygame.display.set_icon(pygame.image.load(os.path.join("..","..","..","resources","ticTacToe.png")))
 window.fill((255,255,255))
@@ -74,10 +74,10 @@ while True:
             for spot in spots:
                 if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
                     if turn == Symbol.X:
-                        drawX(spot.rectangle.x +100, spot.rectangle.y+100)
+                        drawX(spot.rectangle.x +100, spot.rectangle.y+112.5)
                         spot.symbol = Symbol.X
                     else:
-                        drawO(spot.rectangle.x +100, spot.rectangle.y+100)
+                        drawO(spot.rectangle.x +112.5, spot.rectangle.y+112.5)
                         spot.symbol = Symbol.O
                     turn = Symbol.O if turn == Symbol.X else Symbol.X
             if (w := checkWin()) == Symbol.NONE:
