@@ -30,6 +30,7 @@ def checkWin():
     for i in range(0,9,3):
         if (s:= spots[i]) == spots[i + 1] and spots[i] == spots[i + 2] and s.symbol != Symbol.NONE:
             #pygame.draw.line(window, (0,0,0), (s.rectangle.x, s.rectangle.y-100), (spots[i+2].rectangle.x, spots[i+2].rectangle.y+100), 50)
+            print(s.symbol.name)
             return s.symbol
 
     for i in range(0,3):
@@ -38,7 +39,11 @@ def checkWin():
     if ((spots[0] == spots[4] and spots[0] == spots[8]) or (spots[2] == spots[4] and spots[2] == spots[6])) and spots[4].symbol != Symbol.NONE:
         return spots[4].symbol
     return Symbol.NONE
-
+def checkTie():
+    for place in spots:
+        if place.symbol == Symbol.NONE:
+            return False
+    return True
 
 turn = Symbol.X
 
@@ -55,7 +60,7 @@ window.fill((255,255,255))
 makeGameLines(250)
 makeGameLines(525)
 spots = [] #Triplets = Columns
-for x in (n := range(0, 900,275)):
+for x in (n := range(0, 825,275)):
     for y in n:
         spots.append(Spot(x, y))
 
@@ -64,7 +69,7 @@ font = pygame.font.SysFont("Times New Roman", 30)
 while True:
     if turn != Symbol.NONE:
         textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
-        window.blit(textImage, (335,810))
+        window.blit(textImage, (325,810))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -80,9 +85,13 @@ while True:
                         drawO(spot.rectangle.x +112.5, spot.rectangle.y+112.5)
                         spot.symbol = Symbol.O
                     turn = Symbol.O if turn == Symbol.X else Symbol.X
-            if (w := checkWin()) == Symbol.NONE:
-                continue
-            textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
-            window.blit(textImage, (275,810))
-            turn = Symbol.NONE
+            if (w := checkWin()) != Symbol.NONE:
+                textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
+                window.blit(textImage, (275,810))
+                turn = Symbol.NONE
+            elif checkTie():
+                textImage = font.render("The game was tied!", True, (0,0,0), (255,255,255))
+                window.blit(textImage, (275,810))
+                turn = Symbol.NONE
+
     pygame.display.update()
