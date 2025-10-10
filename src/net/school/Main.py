@@ -17,8 +17,8 @@ class Spot:
         return self.symbol == otherSpot.symbol
 
 def makeGameLines(LineXCordinate):
-    pygame.draw.line(window, (0,0,0), (LineXCordinate, 0), (LineXCordinate, 800), 50)
-    pygame.draw.line(window, (0,0,0), (0, LineXCordinate), (800, LineXCordinate), 50)
+    pygame.draw.line(window, (0,0,0), (LineXCordinate, 0), (LineXCordinate, 775), 50)
+    pygame.draw.line(window, (0,0,0), (0, LineXCordinate), (775, LineXCordinate), 50)
 
 def drawX(xCordinate, yCordinate):
     pygame.draw.line(window, (255,0,0), (xCordinate - 75, yCordinate - 100), (xCordinate + 100, yCordinate + 100), 50)
