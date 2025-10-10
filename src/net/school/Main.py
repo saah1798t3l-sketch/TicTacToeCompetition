@@ -16,13 +16,13 @@ class Spot:
     def __eq__(self, otherSpot):
         return self.symbol == otherSpot.symbol
 
-def makeGameLines(LineXCordinate):
-    pygame.draw.line(window, (0,0,0), (LineXCordinate, 0), (LineXCordinate, 775), 50)
-    pygame.draw.line(window, (0,0,0), (0, LineXCordinate), (775, LineXCordinate), 50)
+def makeGameLines(LineXCoordinate):
+    pygame.draw.line(window, (0,0,0), (LineXCoordinate, 0), (LineXCoordinate, 775), 50)
+    pygame.draw.line(window, (0,0,0), (0, LineXCoordinate), (775, LineXCoordinate), 50)
 
-def drawX(xCordinate, yCordinate):
-    pygame.draw.line(window, (255,0,0), (xCordinate - 75, yCordinate - 100), (xCordinate + 100, yCordinate + 100), 50)
-    pygame.draw.line(window, (255,0,0), (xCordinate + 100, yCordinate - 100), (xCordinate - 75, yCordinate + 100), 50)
+def drawX(xCoordinate, yCoordinate):
+    pygame.draw.line(window, (255,0,0), (xCoordinate - 75, yCoordinate - 100), (xCoordinate + 100, yCoordinate + 100), 50)
+    pygame.draw.line(window, (255,0,0), (xCoordinate + 100, yCoordinate - 100), (xCoordinate - 75, yCoordinate + 100), 50)
 def drawO(xCordinate,yCordinate):
     pygame.draw.circle(window, (0,100,255),(xCordinate,yCordinate), 100,50)
 
