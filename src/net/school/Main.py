@@ -36,11 +36,10 @@ def checkWin():
         if (s:= spots[i]) == spots[i + 3] and spots[i] == spots[i + 6] and s.symbol != Symbol.NONE:
             pygame.draw.line(window, (128,50,127), (s.rectangle.x-112.5, s.rectangle.y+112.5), (spots[i+6].rectangle.x+255, spots[i+6].rectangle.y+112.5), 50)
             return s.symbol
-    if (spots[0] == spots[4] and spots[0] == spots[8]) and spots[4].symbol != Symbol.NONE:
-        pygame.draw.line(window, (128,50,127), (0,0), (775,775), 50)
-        return spots[4].symbol
-    if (spots[2] == spots[4] and spots[2] == spots[6]) and spots[4].symbol != Symbol.NONE:
-        pygame.draw.line(window, (128,50,127), (775, 0), (0, 775), 50)
+    if ((leftToRight := (spots[0] == spots[4] and spots[0] == spots[8])) or (spots[2] == spots[4] and spots[2] == spots[6])) and spots[4].symbol != Symbol.NONE:
+        x = (0,0) if leftToRight else (775,0)
+        y = (775,775) if leftToRight else (0,775)
+        pygame.draw.line(window, (128,50,127), x, y, 50)
         return spots[4].symbol
     return Symbol.NONE
 def checkTie():
