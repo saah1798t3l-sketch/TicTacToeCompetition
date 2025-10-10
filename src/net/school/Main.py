@@ -29,12 +29,12 @@ def drawO(xCordinate,yCordinate):
 def checkWin():
     for i in range(0,9,3):
         if (s:= spots[i]) == spots[i + 1] and spots[i] == spots[i + 2] and s.symbol != Symbol.NONE:
-            #pygame.draw.line(window, (0,0,0), (s.rectangle.x, s.rectangle.y-100), (spots[i+2].rectangle.x, spots[i+2].rectangle.y+100), 50)
-            print(s.symbol.name)
+            pygame.draw.line(window, (128,50,127), (s.rectangle.x+112.5, s.rectangle.y), (spots[i+2].rectangle.x+112.5, spots[i+2].rectangle.y+225), 50)
             return s.symbol
 
     for i in range(0,3):
         if (s:= spots[i]) == spots[i + 3] and spots[i] == spots[i + 6] and s.symbol != Symbol.NONE:
+            pygame.draw.line(window, (128,50,127), (s.rectangle.x-112.5, s.rectangle.y+112.5), (spots[i+6].rectangle.x+255, spots[i+6].rectangle.y+112.5), 50)
             return s.symbol
     if ((spots[0] == spots[4] and spots[0] == spots[8]) or (spots[2] == spots[4] and spots[2] == spots[6])) and spots[4].symbol != Symbol.NONE:
         return spots[4].symbol
