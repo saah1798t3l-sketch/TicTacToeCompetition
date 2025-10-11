@@ -72,7 +72,7 @@ font = pygame.font.SysFont("Times New Roman", 30)
 while True:
     if turn != Symbol.NONE:
         textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
-        window.blit(textImage, (325,810))
+        window.blit(textImage, (387-textImage.get_size()[0]//2,810))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -94,7 +94,7 @@ while True:
                 turn = Symbol.NONE
             elif checkTie():
                 textImage = font.render("The game was tied!", True, (0,0,0), (255,255,255))
-                window.blit(textImage, (275,810))
+                window.blit(textImage, (387-textImage.get_size()[0]//2,810))
                 turn = Symbol.NONE
 
     pygame.display.update()
