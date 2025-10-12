@@ -15,6 +15,8 @@ class Spot:
         self.symbol = symbol
     def __eq__(self, otherSpot):
         return self.symbol == otherSpot.symbol
+    def reset(self):
+        self.symbol = Symbol.NONE
 
 def makeGameLines(LineXCoordinate):
     pygame.draw.line(window, (0,0,0), (LineXCoordinate, 0), (LineXCoordinate, 775), 50)
@@ -57,44 +59,51 @@ pygame.init()
 window = pygame.display.set_mode((775,850), 0 ,32)
 pygame.display.set_caption("Tic Tac Toe")
 pygame.display.set_icon(pygame.image.load(os.path.join("..","..","..","resources","ticTacToe.png")))
-window.fill((255,255,255))
 
 
-makeGameLines(250)
-makeGameLines(525)
 spots = [] #Triplets = Columns
 for x in (n := range(0, 825,275)):
     for y in n:
         spots.append(Spot(x, y))
 
-pygame.display.update()
-font = pygame.font.SysFont("Times New Roman", 30)
 while True:
-    if turn != Symbol.NONE:
-        textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
-        window.blit(textImage, (387-textImage.get_size()[0]//2,810))
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
-        if event.type == pygame.MOUSEBUTTONDOWN and turn != Symbol.NONE:
-            position = event.pos
-            for spot in spots:
-                if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
-                    if turn == Symbol.X:
-                        drawX(spot.rectangle.x +100, spot.rectangle.y+112.5)
-                        spot.symbol = Symbol.X
-                    else:
-                        drawO(spot.rectangle.x +112.5, spot.rectangle.y+112.5)
-                        spot.symbol = Symbol.O
-                    turn = Symbol.O if turn == Symbol.X else Symbol.X
-            if (w := checkWin()) != Symbol.NONE:
-                textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
-                window.blit(textImage, (275,810))
-                turn = Symbol.NONE
-            elif checkTie():
-                textImage = font.render("The game was tied!", True, (0,0,0), (255,255,255))
-                window.blit(textImage, (387-textImage.get_size()[0]//2,810))
-                turn = Symbol.NONE
+    window.fill((255,255,255))
+
+    makeGameLines(250)
+    makeGameLines(525)
+    for spot in spots:
+        spot.reset()
 
     pygame.display.update()
+    font = pygame.font.SysFont("Times New Roman", 30)
+    while True:
+        if turn != Symbol.NONE:
+            textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
+            window.blit(textImage, (387-textImage.get_size()[0]//2,810))
+        else:
+            pass
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN and turn != Symbol.NONE:
+                position = event.pos
+                for spot in spots:
+                    if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
+                        if turn == Symbol.X:
+                            drawX(spot.rectangle.x +100, spot.rectangle.y+112.5)
+                            spot.symbol = Symbol.X
+                        else:
+                            drawO(spot.rectangle.x +112.5, spot.rectangle.y+112.5)
+                            spot.symbol = Symbol.O
+                        turn = Symbol.O if turn == Symbol.X else Symbol.X
+                if (w := checkWin()) != Symbol.NONE:
+                    textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
+                    window.blit(textImage, (275,810))
+                    turn = Symbol.NONE
+                elif checkTie():
+                    textImage = font.render("The game was tied!", True, (0,0,0), (255,255,255))
+                    window.blit(textImage, (387-textImage.get_size()[0]//2,810))
+                    turn = Symbol.NONE
+
+        pygame.display.update()
