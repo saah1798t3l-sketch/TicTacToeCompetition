@@ -103,6 +103,7 @@ while True:
                         else:
                             drawO(spot.rectangle.x +112.5, spot.rectangle.y+112.5)
                             spot.symbol = Symbol.O
+
                         turn = Symbol.O if turn == Symbol.X else Symbol.X
                 if (w := checkWin()) != Symbol.NONE:
                     textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
