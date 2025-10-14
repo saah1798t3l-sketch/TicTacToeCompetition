@@ -50,6 +50,12 @@ def checkTie():
             return False
     return True
 
+def makeResetButton():
+    resetButton = pygame.draw.rect(window, (0,112,0), pygame.Rect(0,800, 250, 50))
+    textImage = font.render("Replay?", True, (0,0,0))
+    window.blit(textImage, (125-textImage.get_size()[0]//2, 25-textImage.get_size()[1]//2+800))
+    return resetButton
+
 turn = Symbol.X
 
 
@@ -65,7 +71,7 @@ spots = [] #Triplets = Columns
 for x in (n := range(0, 825,275)):
     for y in n:
         spots.append(Spot(x, y))
-
+font = pygame.font.SysFont("Times New Roman", 30)
 while True:
     window.fill((255,255,255))
 
@@ -73,9 +79,8 @@ while True:
     makeGameLines(525)
     for spot in spots:
         spot.reset()
-
     pygame.display.update()
-    font = pygame.font.SysFont("Times New Roman", 30)
+
     while True:
         if turn != Symbol.NONE:
             textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
@@ -86,7 +91,9 @@ while True:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN and turn != Symbol.NONE:
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if turn == Symbol.NONE:
+                    continue
                 position = event.pos
                 for spot in spots:
                     if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
@@ -101,9 +108,10 @@ while True:
                     textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
                     window.blit(textImage, (275,810))
                     turn = Symbol.NONE
+                    makeResetButton()
                 elif checkTie():
                     textImage = font.render("The game was tied!", True, (0,0,0), (255,255,255))
                     window.blit(textImage, (387-textImage.get_size()[0]//2,810))
                     turn = Symbol.NONE
-
+                    makeResetButton()
         pygame.display.update()
