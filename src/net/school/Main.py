@@ -51,12 +51,10 @@ def checkTie():
     return True
 
 def makeResetButton():
-    resetButton = pygame.draw.rect(window, (0,112,0), pygame.Rect(0,800, 250, 50))
+    pygame.draw.rect(window, (0,112,0), resetButton)
     textImage = font.render("Replay?", True, (0,0,0))
     window.blit(textImage, (125-textImage.get_size()[0]//2, 25-textImage.get_size()[1]//2+800))
-    return resetButton
 
-turn = Symbol.X
 
 
 
@@ -67,13 +65,20 @@ pygame.display.set_caption("Tic Tac Toe")
 pygame.display.set_icon(pygame.image.load(os.path.join("..","..","..","resources","ticTacToe.png")))
 
 
+
 spots = [] #Triplets = Columns
 for x in (n := range(0, 825,275)):
     for y in n:
         spots.append(Spot(x, y))
+
 font = pygame.font.SysFont("Times New Roman", 30)
+resetButton = pygame.Rect(0,800, 250, 50)
+
 while True:
+    continueRound = True
     window.fill((255,255,255))
+    turn = Symbol.X
+
 
     makeGameLines(250)
     makeGameLines(525)
@@ -81,7 +86,7 @@ while True:
         spot.reset()
     pygame.display.update()
 
-    while True:
+    while continueRound:
         if turn != Symbol.NONE:
             textImage = font.render(f"{turn.name} to move", True, (0, 0, 0), (255, 255, 255))
             window.blit(textImage, (387-textImage.get_size()[0]//2,810))
@@ -92,9 +97,13 @@ while True:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
+                position = event.pos
+                if turn == Symbol.NONE and resetButton.collidepoint(position):
+                    continueRound = False
+                    break
                 if turn == Symbol.NONE:
                     continue
-                position = event.pos
+
                 for spot in spots:
                     if spot.rectangle.collidepoint(position) and spot.symbol == Symbol.NONE:
                         if turn == Symbol.X:
@@ -103,7 +112,6 @@ while True:
                         else:
                             drawO(spot.rectangle.x +112.5, spot.rectangle.y+112.5)
                             spot.symbol = Symbol.O
-
                         turn = Symbol.O if turn == Symbol.X else Symbol.X
                 if (w := checkWin()) != Symbol.NONE:
                     textImage = font.render(f"{w.name} has won the game!", True, (0,0,0), (255,255,255))
